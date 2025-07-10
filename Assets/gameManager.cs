@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.GameCenter;
 
 public class gameManager : MonoBehaviour
 {
@@ -6,14 +7,21 @@ public class gameManager : MonoBehaviour
     public int cols = 10;
     public int rows = 10;
     public GameObject prefabLadrillo;
+    //public GameObject[] ladrillosTodos; 
     public Transform puntero;
     public int offSetX = 100;
     public float offSetY = 50;
     public GameObject bola;
 
+    public int celdasTotales = 0;
+    [SerializeField] int puntos = 0;
+
     float initialX = 0;
     void Start()
     {
+        int indexAux = 0;
+        int indiceEspecial = Random.Range(0, celdasTotales);
+        celdasTotales = cols * rows;
         //pposiciona al principio
         puntero.position = new Vector3((-cols / 2)* offSetX, puntero.position.y, puntero.position.z);
 
@@ -25,8 +33,22 @@ public class gameManager : MonoBehaviour
 
             for (int x = 0; x < cols; x++)//responsable de cada columna
             {
-                Instantiate(prefabLadrillo, puntero.transform.position, puntero.transform.rotation);
+                GameObject ladrilloActual = Instantiate(prefabLadrillo, puntero.transform.position, puntero.transform.rotation);
+                
+                ladrilloActual.GetComponent<bloque>().manager = this;
+
+                
+                if (indexAux== indiceEspecial)
+                {
+                    ladrilloActual.GetComponent<bloque>().tienePremio = true;
+                    ladrilloActual.GetComponent<SpriteRenderer>().color = Color.green;
+                }
+                ladrilloActual.GetComponent<bloque>().manager = this;
+
+
+
                 puntero.Translate(Vector3.right * offSetX);
+                indexAux++;
                
             }
             puntero.transform.position = new Vector3(initialX, puntero.transform.position.y - offSetY, puntero.transform.position.z);
@@ -34,12 +56,25 @@ public class gameManager : MonoBehaviour
 
         }  
         puntero.gameObject.SetActive(false);
-        bola.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(Random.Range(-1f,1f)*10, Random.Range(-1f, 1f)*10);
+        Vector2 normalized = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+        bola.GetComponent<Rigidbody2D>().linearVelocity = normalized * 10;
     }
 
     // Update is called once per frame
-    void Update()
+    public void sumaPuntos()
     {
-        
+        celdasTotales--;
+        if (celdasTotales<1)
+        {
+            bola.GetComponent<Rigidbody2D>().linearVelocity = Vector3.zero;
+            Debug.Log("Pantalla superada");
+            puntos += 100;
+        }
+        else
+        {
+            puntos += 1;
+
+        }
+        Debug.Log("Puntos: " + puntos);
     }
 }
