@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Bloque
   - Ball
+  - gameOver
+  - Item
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SocialPlatforms.GameCenter;
+using UnityEngine.UIElements;
 
 public class gameManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class gameManager : MonoBehaviour
     float initialX = 0;
     void Start()
     {
+        puntos = 0;
         int indexAux = 0;
         int indiceEspecial = Random.Range(0, celdasTotales);
         celdasTotales = cols * rows;
@@ -61,7 +63,7 @@ public class gameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void sumaPuntos()
+    public void eliminaCelda()
     {
         celdasTotales--;
         if (celdasTotales<1)
@@ -77,4 +79,10 @@ public class gameManager : MonoBehaviour
         }
         Debug.Log("Puntos: " + puntos);
     }
+    public void sumaPuntos(int pts)
+    {
+        puntos += pts;
+        Debug.Log("Puntuación: " + puntos);
+    }
+
 }

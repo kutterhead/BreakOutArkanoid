@@ -7,14 +7,21 @@ public class bloque : MonoBehaviour
     public bool tienePremio = false;
     public int vidasCelda = 1;
     public gameManager manager;
+    public GameObject[] items;
 
     void Start()
     {
-        
+        manager = GameObject.FindFirstObjectByType<gameManager>();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        manager.sumaPuntos();
+        manager.eliminaCelda();
+
+        if (tienePremio)
+        {
+            Instantiate(items[0],transform.position,transform.rotation);
+        }
+
         Destroy(gameObject);
         
     }
