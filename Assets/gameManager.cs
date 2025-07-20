@@ -18,8 +18,11 @@ public class gameManager : MonoBehaviour
     [SerializeField] int puntos = 0;
 
     float initialX = 0;
+    public int bolasPantalla = 0;
+
     void Start()
     {
+        bolasPantalla = 0;
         puntos = 0;
         int indexAux = 0;
         int indiceEspecial = Random.Range(0, celdasTotales);
@@ -60,6 +63,7 @@ public class gameManager : MonoBehaviour
         puntero.gameObject.SetActive(false);
         Vector2 normalized = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
         bola.GetComponent<Rigidbody2D>().linearVelocity = normalized * 10;
+       
     }
 
     // Update is called once per frame
@@ -68,7 +72,16 @@ public class gameManager : MonoBehaviour
         celdasTotales--;
         if (celdasTotales<1)
         {
-            bola.GetComponent<Rigidbody2D>().linearVelocity = Vector3.zero;
+
+            GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
+            foreach (GameObject ball in balls)
+            {
+
+
+                ball.GetComponent<Rigidbody2D>().linearVelocity = Vector3.zero;
+
+            }
+
             Debug.Log("Pantalla superada");
             puntos += 100;
         }
@@ -84,5 +97,18 @@ public class gameManager : MonoBehaviour
         puntos += pts;
         Debug.Log("Puntuación: " + puntos);
     }
+
+    public void restaBola()
+    {
+
+        bolasPantalla--;
+        if (bolasPantalla<1)
+        {
+            Debug.Log("Game Over");
+
+        }
+
+    }
+
 
 }

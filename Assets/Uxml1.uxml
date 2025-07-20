@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/uss1.uss?fileID=7433441132597879392&amp;guid=66cc05270c3df95419388155b12e3b79&amp;type=3#uss1" />
+    <ui:VisualElement style="flex-grow: 1; flex-direction: column; background-color: rgb(226, 250, 58);">
+        <ui:Button text="Button" name="Fire1" />
+        <ui:Button text="Button" />
+        <ui:Button text="Button" />
+        <ui:Slider label="Slider" value="42" high-value="100" />
+    </ui:VisualElement>
+</ui:UXML>

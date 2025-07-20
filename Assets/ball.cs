@@ -10,13 +10,11 @@ public class ball : MonoBehaviour
     void Start()
     {
         fuente = GetComponent<AudioSource>();
+        manager = FindAnyObjectByType<gameManager>();
+        manager.bolasPantalla++;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -26,8 +24,13 @@ public class ball : MonoBehaviour
         {
             Debug.Log("Bola eliminada.");
             //bola fuera, llamada a manager
+            
+            manager.restaBola();
             Destroy(gameObject);
 
         }
     }
+
+
+
 }
